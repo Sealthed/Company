@@ -53,6 +53,7 @@ public class DepartmentService {
 
     private DepartmentDTO convertToDTO(Department department) {
         DepartmentDTO dto = new DepartmentDTO();
+        dto.setDepartmentid(department.getDepartmentid());
         dto.setStartDate(department.getStartDate());
         dto.setName(department.getName());
         return dto;
