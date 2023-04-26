@@ -42,6 +42,15 @@ public class DepartmentService {
         departmentRepository.deleteById(id);
     }
 
+    public DepartmentDTO updateDepartment(Long id, DepartmentDTO departmentDTO) {
+        Department department = departmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Department not found with id: " + id));
+        department.setName(departmentDTO.getName());
+        department.setStartDate(departmentDTO.getStartDate());
+        Department updatedDepartment = departmentRepository.save(department);
+        return convertToDTO(updatedDepartment);
+    }
+
+
     private DepartmentDTO convertToDTO(Department department) {
         DepartmentDTO dto = new DepartmentDTO();
         dto.setStartDate(department.getStartDate());
