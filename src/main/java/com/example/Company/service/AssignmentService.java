@@ -37,6 +37,17 @@ public class AssignmentService {
         return convertToDTO(savedAssignment);
     }
 
+    public void deleteAssignmentById(Long id) {
+        assignmentRepository.deleteById(id);
+    }
+
+    public AssignmentDTO updateAssignment(Long id, AssignmentDTO assignmentDTO) {
+        Assignment assignment = assignmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Assignment not found with id: " + id));
+        assignment.setNumberOfHours(assignmentDTO.getNumberOfHours());
+        Assignment updatedAssignment = assignmentRepository.save(assignment);
+        return convertToDTO(updatedAssignment);
+    }
+
     private AssignmentDTO convertToDTO(Assignment assignment) {
         AssignmentDTO dto = new AssignmentDTO();
         dto.setId(assignment.getId());

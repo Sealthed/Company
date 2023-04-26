@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +31,17 @@ public class DepartmentLocationController {
     public ResponseEntity<DepartmentLocationDTO> createDepartmentLocation(DepartmentLocationDTO departmentLocationDTO) {
         DepartmentLocationDTO createdDepartmentLocation = departmentLocationService.createDepartmentLocation(departmentLocationDTO);
         return new ResponseEntity<>(createdDepartmentLocation, HttpStatus.CREATED);
+    }
+
+    @PutMapping ("/{id}")
+    public ResponseEntity<DepartmentLocationDTO> updateDepartmentLocation(@PathVariable Long id, @RequestBody DepartmentLocationDTO departmentLocationDTO) {
+        DepartmentLocationDTO updatedDepartmentLocation = departmentLocationService.updateDepartmentLocation(id, departmentLocationDTO);
+        return new ResponseEntity<>(updatedDepartmentLocation, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDepartmentLocationById(@PathVariable Long id) {
+        departmentLocationService.deleteDepartmentLocationById(id);
+        return ResponseEntity.noContent().build();
     }
 }

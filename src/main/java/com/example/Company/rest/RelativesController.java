@@ -4,10 +4,7 @@ import com.example.Company.service.RelativesService;
 import com.example.Company.serviceDTO.RelativesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.HttpStatus;
 import java.util.List;
@@ -35,5 +32,17 @@ public class RelativesController {
     public ResponseEntity<RelativesDTO> createRelatives(RelativesDTO relativesDTO) {
         RelativesDTO createdRelatives = relativesService.createRelatives(relativesDTO);
         return new ResponseEntity<>(createdRelatives, HttpStatus.CREATED);
+    }
+
+    @PutMapping ("/{id}")
+    public ResponseEntity<RelativesDTO> updateRelatives(@PathVariable Long id, @RequestBody RelativesDTO relativesDTO) {
+        RelativesDTO updatedRelatives = relativesService.updateRelatives(id, relativesDTO);
+        return new ResponseEntity<>(updatedRelatives, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRelativesById(@PathVariable Long id) {
+        relativesService.deleteRelativesById(id);
+        return ResponseEntity.noContent().build();
     }
 }

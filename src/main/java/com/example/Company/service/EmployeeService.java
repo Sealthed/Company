@@ -30,6 +30,7 @@ public class EmployeeService {
         return convertToDTO(employee);
     }
 
+
     public EmployeeDTO createEmployee(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
         employee.setEmployeeId(employeeDTO.getId());
@@ -38,6 +39,19 @@ public class EmployeeService {
         employee.setGender(employeeDTO.getGender());
         Employee savedEmployee = employeeRepository.save(employee);
         return convertToDTO(savedEmployee);
+    }
+
+    public void deleteEmployeeById(Long id) {
+        employeeRepository.deleteById(id);
+    }
+
+    public EmployeeDTO updateEmployee(Long id, EmployeeDTO employeeDTO) {
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
+        employee.setFirstName(employeeDTO.getFirstName());
+        employee.setLastName(employeeDTO.getLastName());
+        employee.setGender(employeeDTO.getGender());
+        Employee updatedEmployee = employeeRepository.save(employee);
+        return convertToDTO(updatedEmployee);
     }
 
     public EmployeeDTO convertToDTO(Employee employee) {

@@ -39,6 +39,18 @@ public ProjectDTO createProject(ProjectDTO projectDTO) {
         return convertToDTO(savedProject);
     }
 
+    public void deleteProjectById(Long id) {
+        projectRepository.deleteById(id);
+    }
+
+    public ProjectDTO updateProject(Long id, ProjectDTO projectDTO) {
+        Project project = projectRepository.findById(id).orElseThrow(() -> new RuntimeException("Project not found with id: " + id));
+        project.setProjectName(projectDTO.getName());
+        project.setArea(projectDTO.getArea());
+        Project updatedProject = projectRepository.save(project);
+        return convertToDTO(updatedProject);
+    }
+
     public ProjectDTO convertToDTO(Project project) {
         ProjectDTO dto = new ProjectDTO();
         dto.setId(project.getProjectid());

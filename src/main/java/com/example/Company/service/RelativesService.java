@@ -37,6 +37,17 @@ public class RelativesService {
         return convertToDTO(savedRelatives);
     }
 
+    public void deleteRelativesById(Long id) {
+        relativesRepository.deleteById(id);
+    }
+
+    public RelativesDTO updateRelatives(Long id, RelativesDTO relativesDTO) {
+        Relatives relatives = relativesRepository.findById(id).orElseThrow(() -> new RuntimeException("Relatives not found with id: " + id));
+        relatives.setFullName(relativesDTO.getRelativename());
+        Relatives updatedRelatives = relativesRepository.save(relatives);
+        return convertToDTO(updatedRelatives);
+    }
+
     private RelativesDTO convertToDTO(Relatives relatives) {
         RelativesDTO dto = new RelativesDTO();
         dto.setId(relatives.getId());

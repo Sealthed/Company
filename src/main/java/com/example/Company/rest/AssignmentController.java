@@ -6,10 +6,7 @@ import com.example.Company.serviceDTO.AssignmentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,9 +28,22 @@ public class AssignmentController {
         return new ResponseEntity<>(assignment, HttpStatus.OK);
     }
 
+    @PutMapping ("/{id}")
+    public ResponseEntity<AssignmentDTO> updateAssignment(@PathVariable Long id, @RequestBody AssignmentDTO assignmentDTO) {
+        AssignmentDTO updatedAssignment = assignmentService.updateAssignment(id, assignmentDTO);
+        return new ResponseEntity<>(updatedAssignment, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<AssignmentDTO> createAssignment(AssignmentDTO assignmentDTO) {
         AssignmentDTO createdAssignment = assignmentService.createAssignment(assignmentDTO);
         return new ResponseEntity<>(createdAssignment, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAssignmentById(@PathVariable Long id) {
+        assignmentService.deleteAssignmentById(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

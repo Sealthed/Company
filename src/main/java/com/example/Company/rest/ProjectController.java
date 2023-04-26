@@ -3,10 +3,7 @@ package com.example.Company.rest;
 import com.example.Company.service.ProjectService;
 import com.example.Company.serviceDTO.ProjectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.HttpStatus;
 import java.util.List;
@@ -34,5 +31,17 @@ public class ProjectController {
     public ResponseEntity<ProjectDTO> createProject(ProjectDTO projectDTO) {
         ProjectDTO createdProject = projectService.createProject(projectDTO);
         return new ResponseEntity<>(createdProject, HttpStatus.CREATED);
+    }
+
+    @PutMapping ("/{id}")
+    public ResponseEntity<ProjectDTO> updateProject(@PathVariable Long id, @RequestBody ProjectDTO projectDTO) {
+        ProjectDTO updatedProject = projectService.updateProject(id, projectDTO);
+        return new ResponseEntity<>(updatedProject, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProjectById(@PathVariable Long id) {
+        projectService.deleteProjectById(id);
+        return ResponseEntity.noContent().build();
     }
 }

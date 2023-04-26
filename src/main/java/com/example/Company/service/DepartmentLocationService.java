@@ -36,6 +36,17 @@ public class DepartmentLocationService {
         return convertToDTO(savedDepartmentLocation);
     }
 
+    public void deleteDepartmentLocationById(Long id) {
+        departmentLocationRepository.deleteById(id);
+    }
+
+    public DepartmentLocationDTO updateDepartmentLocation(Long id, DepartmentLocationDTO departmentLocationDTO) {
+        DepartmentLocation departmentLocation = departmentLocationRepository.findById(id).orElseThrow(() -> new RuntimeException("DepartmentLocation not found with id: " + id));
+        departmentLocation.setLocation(departmentLocationDTO.getLocation());
+        DepartmentLocation updatedDepartmentLocation = departmentLocationRepository.save(departmentLocation);
+        return convertToDTO(updatedDepartmentLocation);
+    }
+
     private DepartmentLocationDTO convertToDTO(DepartmentLocation departmentLocation) {
         DepartmentLocationDTO dto = new DepartmentLocationDTO();
         dto.setId(departmentLocation.getId());
