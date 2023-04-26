@@ -49,7 +49,7 @@ public class DepartmentController {
         return new ResponseEntity<>(updatedDepartment, HttpStatus.OK);
     }
 
-    @GetMapping("/from")
+    @GetMapping("/from") //Extremely bad way to implement this feature, will check later
     public ResponseEntity<List<DepartmentDTO>> findDepartmentsByStartDateBetween(
             @RequestParam("startDate")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDateStr,
             @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDateStr)
