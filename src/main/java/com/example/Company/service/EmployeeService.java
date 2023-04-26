@@ -30,6 +30,13 @@ public class EmployeeService {
         return convertToDTO(employee);
     }
 
+    //Find employee by first name and last name
+    public EmployeeDTO getEmployeeByFirstNameAndLastName(String firstName, String lastName) {
+        Employee employee = (Employee) employeeRepository.findByFirstNameAndLastName(firstName, lastName)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+        return convertToDTO(employee);
+    }
+
 
     public EmployeeDTO createEmployee(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
@@ -44,6 +51,7 @@ public class EmployeeService {
     public void deleteEmployeeById(Long id) {
         employeeRepository.deleteById(id);
     }
+
 
     public EmployeeDTO updateEmployee(Long id, EmployeeDTO employeeDTO) {
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));

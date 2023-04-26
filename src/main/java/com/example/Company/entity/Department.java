@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -23,7 +23,7 @@ public class Department {
 
     //start_date, date
     @Column (name = "start_date")
-    private Date startDate;
+    private LocalDate startDate;
 
     //departmentid, one-to-many relationship with Project
     @OneToMany (mappedBy = "department")

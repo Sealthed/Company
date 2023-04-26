@@ -3,11 +3,14 @@ package com.example.Company.rest;
 import com.example.Company.serviceDTO.DepartmentDTO;
 import com.example.Company.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.sql.Date;
 
 @RestController
 @RequestMapping("/departments")
@@ -45,6 +48,16 @@ public class DepartmentController {
         DepartmentDTO updatedDepartment = departmentService.updateDepartment(id, departmentDTO);
         return new ResponseEntity<>(updatedDepartment, HttpStatus.OK);
     }
+
+    @GetMapping("/from")
+    public ResponseEntity<List<DepartmentDTO>> findDepartmentsByStartDateBetween(
+            @RequestParam("startDate")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDateStr,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDateStr)
+    {
+        List<DepartmentDTO> departments = departmentService.getDepartmentByStartDateBetween(startDateStr, endDateStr);
+        return new ResponseEntity<>(departments, HttpStatus.OK);
+    }
+
 
 }
 

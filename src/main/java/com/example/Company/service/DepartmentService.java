@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,6 +38,14 @@ public class DepartmentService {
         department.setName(departmentDTO.getName());
         Department savedDepartment = departmentRepository.save(department);
         return convertToDTO(savedDepartment);
+    }
+
+    //Find department with startdate between two dates
+    public List<DepartmentDTO> getDepartmentByStartDateBetween(LocalDate startDate, LocalDate endDate) {
+        List<Department> departments = departmentRepository.findByStartDateBetween(startDate, endDate);
+        return departments.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     public void deleteDepartmentById(Long id) {

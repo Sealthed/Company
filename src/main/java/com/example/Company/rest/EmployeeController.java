@@ -45,4 +45,11 @@ public class EmployeeController {
         employeeService.deleteEmployeeById(id);
         return ResponseEntity.noContent().build();
     }
+
+    //Find by first name and last name
+    @GetMapping("/{firstName}/{lastName}")
+    public ResponseEntity<EmployeeDTO> getEmployeeByFirstNameAndLastName(@PathVariable String firstName, @PathVariable String lastName) {
+        EmployeeDTO employee = employeeService.getEmployeeByFirstNameAndLastName(firstName, lastName);
+        return new ResponseEntity<>(employee, HttpStatus.OK);
+    }
 }
