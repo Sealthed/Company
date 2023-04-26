@@ -40,7 +40,7 @@ public class DepartmentService {
         return convertToDTO(savedDepartment);
     }
 
-    //Find department with startdate between two dates
+    //Find department with startdate between two dates (This is not good/Not working)
     public List<DepartmentDTO> getDepartmentByStartDateBetween(LocalDate startDate, LocalDate endDate) {
         List<Department> departments = departmentRepository.findByStartDateBetween(startDate, endDate);
         return departments.stream()
