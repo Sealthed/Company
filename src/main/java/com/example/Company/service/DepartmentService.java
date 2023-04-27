@@ -32,6 +32,11 @@ public class DepartmentService {
         return convertToDTO(department);
     }
 
+    //Add method that delete all departments
+    public void deleteAllDepartments() {
+        departmentRepository.deleteAll();
+    }
+
     public DepartmentDTO createDepartment(DepartmentDTO departmentDTO) {
         Department department = new Department();
         department.setStartDate(departmentDTO.getStartDate());
@@ -40,7 +45,7 @@ public class DepartmentService {
         return convertToDTO(savedDepartment);
     }
 
-    //Find department with startdate between two dates (This is not good)
+    //Find department with startdate between two dates (This is unoptimized, but it works)
     public List<DepartmentDTO> getDepartmentByStartDateBetween(LocalDate startDate, LocalDate endDate) {
         List<Department> departments = departmentRepository.findByStartDateBetween(startDate, endDate);
         return departments.stream()

@@ -43,6 +43,11 @@ public ProjectDTO createProject(ProjectDTO projectDTO) {
         projectRepository.deleteById(id);
     }
 
+    //Add method that delete all projects
+    public void deleteAllProjects() {
+        projectRepository.deleteAll();
+    }
+
     public ProjectDTO updateProject(Long id, ProjectDTO projectDTO) {
         Project project = projectRepository.findById(id).orElseThrow(() -> new RuntimeException("Project not found with id: " + id));
         project.setProjectName(projectDTO.getName());

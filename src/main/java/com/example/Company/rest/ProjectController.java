@@ -44,6 +44,14 @@ public class ProjectController {
         projectService.deleteProjectById(id);
         return ResponseEntity.noContent().build();
     }
+    //Add delete all projects
+    //Test Case: http://localhost:8080/projects/deleteAll
+    @DeleteMapping
+    public ResponseEntity<Void> deleteAllProjects() {
+        projectService.deleteAllProjects();
+        return ResponseEntity.noContent().build();
+    }
+
 
     //Custom API for finding projects by name (ignore case)
     //Test Case: http://localhost:8080/projects/filter?name=project

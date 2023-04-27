@@ -44,6 +44,13 @@ public class DepartmentLocationController {
         departmentLocationService.deleteDepartmentLocationById(id);
         return ResponseEntity.noContent().build();
     }
+    //Add method to delete all Department Locations
+    //http://localhost:8080/departmentLocations/deleteAll
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<Void> deleteAllDepartmentLocations() {
+        departmentLocationService.deleteAllDepartmentLocations();
+        return ResponseEntity.noContent().build();
+    }
 
     //Find Department Location Sort by Id
     //http://localhost:8080/departmentLocations/sort

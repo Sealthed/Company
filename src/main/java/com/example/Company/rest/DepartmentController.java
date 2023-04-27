@@ -49,6 +49,13 @@ public class DepartmentController {
         return new ResponseEntity<>(updatedDepartment, HttpStatus.OK);
     }
 
+    //Add delete all departments
+    @DeleteMapping ("/deleteAll")
+    public ResponseEntity<Void> deleteAllDepartments() {
+        departmentService.deleteAllDepartments();
+        return ResponseEntity.noContent().build();
+    }
+
     //Find departments by start date between two dates
     //Test case: http://localhost:8080/departments/from?startDate=2020-01-01&endDate=2020-12-31
     @GetMapping("/from")

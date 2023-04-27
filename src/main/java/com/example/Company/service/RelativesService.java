@@ -41,6 +41,20 @@ public class RelativesService {
         relativesRepository.deleteById(id);
     }
 
+    //Add method that delete all relatives
+    public void deleteAllRelatives() {
+        relativesRepository.deleteAll();
+    }
+
+    //Add method that uses NOT that filter out all relatives that have a specific name "Abby"
+    public List<RelativesDTO> findRelativesByNameNot(String name) {
+        List<Relatives> relatives = relativesRepository.findByFullNameNot(name);
+        return relatives.stream()
+                .map(this::convertToDTO)
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+
     public RelativesDTO updateRelatives(Long id, RelativesDTO relativesDTO) {
         Relatives relatives = relativesRepository.findById(id).orElseThrow(() -> new RuntimeException("Relatives not found with id: " + id));
         relatives.setFullName(relativesDTO.getRelativename());

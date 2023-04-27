@@ -40,9 +40,25 @@ public class RelativesController {
         return new ResponseEntity<>(updatedRelatives, HttpStatus.OK);
     }
 
+    //add delete method that deletes all relatives
+    //Test Case: http://localhost:8080/relatives/deleteAll
+    @DeleteMapping ("/deleteAll")
+    public ResponseEntity<Void> deleteAllRelatives() {
+        relativesService.deleteAllRelatives();
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRelativesById(@PathVariable Long id) {
         relativesService.deleteRelativesById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    //Add custom method that uses NOT that filter out all relatives that have a specific name "Abby"
+    //Test Case: http://localhost:8080/relatives/search?name=Abby
+    @GetMapping("/search")
+    public ResponseEntity<RelativesDTO> getRelativesByName(@RequestBody String name) {
+        RelativesDTO relatives = (RelativesDTO) relativesService.findRelativesByNameNot(name);
+        return new ResponseEntity<>(relatives, HttpStatus.OK);
     }
 }
