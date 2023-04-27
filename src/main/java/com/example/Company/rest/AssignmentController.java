@@ -46,4 +46,13 @@ public class AssignmentController {
         return ResponseEntity.noContent().build();
     }
 
+
+    //Custom API for filtering out assignments by number of hours
+    //This API will return all assignments that are not equal to the number of hours specified in the request
+    //Example: http://localhost:8080/assignments/filter?numberOfHours=40
+    @GetMapping("/filter")
+    public ResponseEntity<List<AssignmentDTO>> findAssignmentNotByNumberOfHours( @RequestParam ("numberOfHours") int numberOfHours) {
+        List<AssignmentDTO> assignments = assignmentService.findAssignmentByNumberOfHoursNot(numberOfHours);
+        return new ResponseEntity(assignments, HttpStatus.OK);
+    }
 }

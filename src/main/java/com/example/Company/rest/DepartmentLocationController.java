@@ -44,4 +44,12 @@ public class DepartmentLocationController {
         departmentLocationService.deleteDepartmentLocationById(id);
         return ResponseEntity.noContent().build();
     }
+
+    //Find Department Location Sort by Id
+    //http://localhost:8080/departmentLocations/sort
+    @GetMapping("/search")
+    public ResponseEntity<DepartmentLocationDTO> findDepartmentLocationName( @RequestParam ("Location") String location) {
+        List<DepartmentLocationDTO> departmentLocations = departmentLocationService.getDepartmentLocationByLocationId(location);
+        return new ResponseEntity(departmentLocations, HttpStatus.OK);
+    }
 }

@@ -61,6 +61,15 @@ public class EmployeeService {
         Employee updatedEmployee = employeeRepository.save(employee);
         return convertToDTO(updatedEmployee);
     }
+    //Add method to find employee first name like "John" using the repository
+    public List<EmployeeDTO> getEmployeeByFirstName(String firstName) {
+        List<Employee> employees = employeeRepository.findByFirstNameLike("%John%");
+        return employees.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+
 
     public EmployeeDTO convertToDTO(Employee employee) {
         EmployeeDTO dto = new EmployeeDTO();

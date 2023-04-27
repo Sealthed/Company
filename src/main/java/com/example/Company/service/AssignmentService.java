@@ -48,6 +48,14 @@ public class AssignmentService {
         return convertToDTO(updatedAssignment);
     }
 
+    public List<AssignmentDTO> findAssignmentByNumberOfHoursNot(Integer numberOfHours) {
+        List<Assignment> assignments = assignmentRepository.findByNumberOfHoursNot(numberOfHours);
+        return assignments.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+
     private AssignmentDTO convertToDTO(Assignment assignment) {
         AssignmentDTO dto = new AssignmentDTO();
         dto.setId(assignment.getId());

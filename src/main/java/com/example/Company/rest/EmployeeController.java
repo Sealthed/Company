@@ -46,10 +46,17 @@ public class EmployeeController {
         return ResponseEntity.noContent().build();
     }
 
-    //Find by first name and last name
-    @GetMapping("/{firstName}/{lastName}")
-    public ResponseEntity<EmployeeDTO> getEmployeeByFirstNameAndLastName(@PathVariable String firstName, @PathVariable String lastName) {
+    @GetMapping("/search")
+    public ResponseEntity<EmployeeDTO> getEmployeeByFirstNameAndLastName(String firstName, String lastName) {
         EmployeeDTO employee = employeeService.getEmployeeByFirstNameAndLastName(firstName, lastName);
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
+    // http://localhost:8080/employees/search/firstName
+    // Find employee first name like "John"
+    @GetMapping("/search/{firstName}")
+    public ResponseEntity<List<EmployeeDTO>> getEmployeesByFirstName(@PathVariable String firstName) {
+        List<EmployeeDTO> employees = employeeService.getEmployeeByFirstName(firstName);
+        return new ResponseEntity<>(employees, HttpStatus.OK);
+    }
+
 }

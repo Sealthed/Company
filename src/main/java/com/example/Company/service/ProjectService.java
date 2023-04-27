@@ -51,6 +51,14 @@ public ProjectDTO createProject(ProjectDTO projectDTO) {
         return convertToDTO(updatedProject);
     }
 
+    //Find by name ignoring case
+    public List<ProjectDTO> findProjectByNameIgnoreCase(String name) {
+        List<Project> projects = projectRepository.findByProjectNameIgnoreCase(name);
+        return projects.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
     public ProjectDTO convertToDTO(Project project) {
         ProjectDTO dto = new ProjectDTO();
         dto.setId(project.getProjectid());

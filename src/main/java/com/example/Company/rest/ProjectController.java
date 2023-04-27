@@ -44,4 +44,12 @@ public class ProjectController {
         projectService.deleteProjectById(id);
         return ResponseEntity.noContent().build();
     }
+
+    //Custom API for finding projects by name (ignore case)
+    //Test Case: http://localhost:8080/projects/filter?name=project
+    @GetMapping("/filter")
+    public ResponseEntity<List<ProjectDTO>> findProjectNameIgnoreCaseContaining(@RequestParam ("name") String name) {
+        List<ProjectDTO> projects = projectService.findProjectByNameIgnoreCase(name);
+        return new ResponseEntity(projects, HttpStatus.OK);
+    }
 }

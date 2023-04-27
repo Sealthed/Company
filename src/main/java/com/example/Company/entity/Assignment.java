@@ -30,8 +30,4 @@ public class Assignment {
     @ManyToOne
     @JoinColumn (name = "projectid", referencedColumnName = "projectid")
     private Project project;
-
-
-
-
 }

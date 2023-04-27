@@ -6,6 +6,7 @@ import com.example.Company.serviceDTO.DepartmentLocationDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -47,10 +48,22 @@ public class DepartmentLocationService {
         return convertToDTO(updatedDepartmentLocation);
     }
 
+    //find department location by location id using Sort
+    public List<DepartmentLocationDTO> getDepartmentLocationByLocationId(String location) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        List <DepartmentLocation> departmentLocations = departmentLocationRepository.findByLocationOrderByIdAsc(location, sort);
+        return departmentLocations.stream()
+                .map(this::convertToDTO)
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+
     private DepartmentLocationDTO convertToDTO(DepartmentLocation departmentLocation) {
         DepartmentLocationDTO dto = new DepartmentLocationDTO();
         dto.setId(departmentLocation.getId());
         dto.setLocation(departmentLocation.getLocation());
         return dto;
     }
+
+
 }
