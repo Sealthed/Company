@@ -29,7 +29,7 @@ public class RelativesController {
     }
 
     @PostMapping
-    public ResponseEntity<RelativesDTO> createRelatives(RelativesDTO relativesDTO) {
+    public ResponseEntity<RelativesDTO> createRelatives(@RequestBody RelativesDTO relativesDTO) {
         RelativesDTO createdRelatives = relativesService.createRelatives(relativesDTO);
         return new ResponseEntity<>(createdRelatives, HttpStatus.CREATED);
     }

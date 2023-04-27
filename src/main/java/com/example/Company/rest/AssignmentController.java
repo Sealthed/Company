@@ -35,7 +35,7 @@ public class AssignmentController {
     }
 
     @PostMapping
-    public ResponseEntity<AssignmentDTO> createAssignment(AssignmentDTO assignmentDTO) {
+    public ResponseEntity<AssignmentDTO> createAssignment(@RequestBody AssignmentDTO assignmentDTO) {
         AssignmentDTO createdAssignment = assignmentService.createAssignment(assignmentDTO);
         return new ResponseEntity<>(createdAssignment, HttpStatus.CREATED);
     }

@@ -28,8 +28,10 @@ public class EmployeeController {
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
+    // Create a new employee
+    // Test Case: http://localhost:8080/employees
     @PostMapping
-    public ResponseEntity<EmployeeDTO> createEmployee(EmployeeDTO employeeDTO) {
+    public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
         EmployeeDTO createdEmployee = employeeService.createEmployee(employeeDTO);
         return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
     }
@@ -51,6 +53,15 @@ public class EmployeeController {
         EmployeeDTO employee = employeeService.getEmployeeByFirstNameAndLastName(firstName, lastName);
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
+
+    //add delete method that deletes all employees
+    @DeleteMapping ("/deleteAll")
+    public ResponseEntity<Void> deleteAllEmployees() {
+        employeeService.deleteAllEmployees();
+        return ResponseEntity.noContent().build();
+    }
+
+
     // http://localhost:8080/employees/search/firstName
     // Find employee first name like "John"
     @GetMapping("/search/{firstName}")

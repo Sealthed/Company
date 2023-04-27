@@ -28,7 +28,7 @@ public class DepartmentLocationController {
         return new ResponseEntity<>(departmentLocation, HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<DepartmentLocationDTO> createDepartmentLocation(DepartmentLocationDTO departmentLocationDTO) {
+    public ResponseEntity<DepartmentLocationDTO> createDepartmentLocation(@RequestBody DepartmentLocationDTO departmentLocationDTO) {
         DepartmentLocationDTO createdDepartmentLocation = departmentLocationService.createDepartmentLocation(departmentLocationDTO);
         return new ResponseEntity<>(createdDepartmentLocation, HttpStatus.CREATED);
     }

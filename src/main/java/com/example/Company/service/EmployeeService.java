@@ -40,16 +40,23 @@ public class EmployeeService {
 
     public EmployeeDTO createEmployee(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
-        employee.setEmployeeId(employeeDTO.getId());
+        employee.setDateOfBirth(employeeDTO.getDateOfBirth());
         employee.setFirstName(employeeDTO.getFirstName());
         employee.setLastName(employeeDTO.getLastName());
+        employee.setMiddleName(employeeDTO.getMiddleName());
         employee.setGender(employeeDTO.getGender());
+        employee.setSalary(employeeDTO.getSalary());
         Employee savedEmployee = employeeRepository.save(employee);
         return convertToDTO(savedEmployee);
     }
 
     public void deleteEmployeeById(Long id) {
         employeeRepository.deleteById(id);
+    }
+
+    //add delete method that deletes all employees
+    public void deleteAllEmployees() {
+        employeeRepository.deleteAll();
     }
 
 
@@ -73,7 +80,8 @@ public class EmployeeService {
 
     public EmployeeDTO convertToDTO(Employee employee) {
         EmployeeDTO dto = new EmployeeDTO();
-        dto.setId(employee.getEmployeeId());
+        dto.setEmployeeId(employee.getEmployeeId());
+        dto.setDateOfBirth(employee.getDateOfBirth());
         dto.setFirstName(employee.getFirstName());
         dto.setMiddleName(employee.getMiddleName());
         dto.setLastName(employee.getLastName());

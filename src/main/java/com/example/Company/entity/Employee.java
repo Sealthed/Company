@@ -16,6 +16,7 @@ import java.time.LocalDate;
 @Table (name = "Employee")
 public class Employee {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employeeid", length = 9)
     private Long employeeId;
 
@@ -42,7 +43,7 @@ public class Employee {
     @Column(name = "salary")
     private Integer salary;
 
-    //create deptid column
+    //create deptid columndate
     @ManyToOne
     @JoinColumn(name = "deptid", referencedColumnName = "departmentid")
     private Department department;
