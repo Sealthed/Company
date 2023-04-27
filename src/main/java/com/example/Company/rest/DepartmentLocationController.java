@@ -52,7 +52,7 @@ public class DepartmentLocationController {
         return ResponseEntity.noContent().build();
     }
 
-    //Find Department Location Sort by Id
+    //Custom APIs that find Department Location Sort by Id
     //http://localhost:8080/departmentLocations/sort
     @GetMapping("/search")
     public ResponseEntity<DepartmentLocationDTO> findDepartmentLocationName( @RequestParam ("Location") String location) {

@@ -56,7 +56,7 @@ public class DepartmentController {
         return ResponseEntity.noContent().build();
     }
 
-    //Find departments by start date between two dates
+    //Custom APIs that find departments by start date between two dates
     //Test case: http://localhost:8080/departments/from?startDate=2020-01-01&endDate=2020-12-31
     @GetMapping("/from")
     public ResponseEntity<List<DepartmentDTO>> findDepartmentsByStartDateBetween(

@@ -63,7 +63,7 @@ public class EmployeeController {
 
 
     // http://localhost:8080/employees/search/firstName
-    // Find employee first name like "John"
+    // Custom APIs find employee first name like "John"
     @GetMapping("/search/{firstName}")
     public ResponseEntity<List<EmployeeDTO>> getEmployeesByFirstName(@PathVariable String firstName) {
         List<EmployeeDTO> employees = employeeService.getEmployeeByFirstName(firstName);
