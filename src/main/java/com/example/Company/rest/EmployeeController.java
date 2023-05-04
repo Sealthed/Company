@@ -54,12 +54,6 @@ public class EmployeeController {
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
-    //add delete method that deletes all employees
-    @DeleteMapping ("/deleteAll")
-    public ResponseEntity<Void> deleteAllEmployees() {
-        employeeService.deleteAllEmployees();
-        return ResponseEntity.noContent().build();
-    }
 
 
     // http://localhost:8080/employees/search/firstName

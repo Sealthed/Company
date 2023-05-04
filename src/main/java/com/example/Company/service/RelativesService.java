@@ -41,10 +41,7 @@ public class RelativesService {
         relativesRepository.deleteById(id);
     }
 
-    //Add method that delete all relatives
-    public void deleteAllRelatives() {
-        relativesRepository.deleteAll();
-    }
+
 
     //Add method that uses NOT that filter out all relatives that have a specific name "Abby"
     public List<RelativesDTO> findRelativesByNameNot(String name) {

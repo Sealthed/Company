@@ -54,10 +54,7 @@ public class AssignmentService {
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
-    //Add method that delete all assignments
-    public void deleteAllAssignments() {
-        assignmentRepository.deleteAll();
-    }
+
 
     private AssignmentDTO convertToDTO(Assignment assignment) {
         AssignmentDTO dto = new AssignmentDTO();

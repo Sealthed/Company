@@ -32,10 +32,6 @@ public class DepartmentService {
         return convertToDTO(department);
     }
 
-    //Add method that delete all departments
-    public void deleteAllDepartments() {
-        departmentRepository.deleteAll();
-    }
 
     public DepartmentDTO createDepartment(DepartmentDTO departmentDTO) {
         Department department = new Department();

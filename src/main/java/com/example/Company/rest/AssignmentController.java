@@ -39,12 +39,7 @@ public class AssignmentController {
         AssignmentDTO createdAssignment = assignmentService.createAssignment(assignmentDTO);
         return new ResponseEntity<>(createdAssignment, HttpStatus.CREATED);
     }
-    //added delete all assignments
-    @DeleteMapping ("/deleteAll")
-    public ResponseEntity<Void> deleteAllAssignments() {
-        assignmentService.deleteAllAssignments();
-        return ResponseEntity.noContent().build();
-    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAssignmentById(@PathVariable Long id) {
