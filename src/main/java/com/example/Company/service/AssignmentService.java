@@ -55,6 +55,28 @@ public class AssignmentService {
                 .collect(Collectors.toList());
     }
 
+    //Update the serivce to use the new @Query in AssignmentRepository
+    public List<AssignmentDTO> findAssignmentByNumberOfHoursGreaterThan10() {
+        List<Assignment> assignments = assignmentRepository.findAssignmentByNumberOfHoursGreaterThan10();
+        return assignments.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<AssignmentDTO> findAssignmentByEmployeeId(Long employeeId) {
+        List<Assignment> assignments = assignmentRepository.findAssignmentByEmployeeId(employeeId);
+        return assignments.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+
+    public List<AssignmentDTO>findAssignmentByEmployeeIdAndProjectId(Long employeeId, Long projectId) {
+        List<Assignment> assignments = assignmentRepository.findAssignmentByEmployeeIdAndProjectId(employeeId, projectId);
+        return assignments.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
 
     private AssignmentDTO convertToDTO(Assignment assignment) {
         AssignmentDTO dto = new AssignmentDTO();
