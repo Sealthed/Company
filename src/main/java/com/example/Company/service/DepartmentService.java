@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,10 +31,6 @@ public class DepartmentService {
         return convertToDTO(department);
     }
 
-    //Add method that delete all departments
-    public void deleteAllDepartments() {
-        departmentRepository.deleteAll();
-    }
 
     public DepartmentDTO createDepartment(DepartmentDTO departmentDTO) {
         Department department = new Department();
@@ -45,16 +40,38 @@ public class DepartmentService {
         return convertToDTO(savedDepartment);
     }
 
-    //Find department with startdate between two dates (This is unoptimized, but it works)
-    public List<DepartmentDTO> getDepartmentByStartDateBetween(LocalDate startDate, LocalDate endDate) {
-        List<Department> departments = departmentRepository.findByStartDateBetween(startDate, endDate);
+    public void deleteDepartmentById(Long id) {
+        departmentRepository.deleteById(id);
+    }
+
+    //Update the service class to use named query from repository and department entity
+    public List<DepartmentDTO> findDepartmentByStartDate(LocalDate date) {
+        List<Department> departments = departmentRepository.findByStartDate(date);
         return departments.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
-    public void deleteDepartmentById(Long id) {
-        departmentRepository.deleteById(id);
+    //Update the service class to use named query from repository and department entity
+    public List<DepartmentDTO> findByStartDate(LocalDate date){
+        List<Department> departments = departmentRepository.findByStartDate(date);
+        return departments.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    //Update the service class to use named query from repository and department entity
+    public List<DepartmentDTO> findByLocation(String location){
+        List<Department> departments = departmentRepository.findByLocation(location);
+        return departments.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    //Use the countByLocation in the repository to count the number of departments in a location
+    public Long countByLocation(String location){
+        List<Object[]> results = departmentRepository.countByLocation(location);
+        return results.stream().mapToLong(result -> (Long) result[0]).sum();
     }
 
     public DepartmentDTO updateDepartment(Long id, DepartmentDTO departmentDTO) {

@@ -23,7 +23,7 @@ public class AssignmentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AssignmentDTO> getAssignmentById(Long id) {
+    public ResponseEntity<AssignmentDTO> getAssignmentById(@PathVariable Long id) {
         AssignmentDTO assignment = assignmentService.getAssignmentById(id);
         return new ResponseEntity<>(assignment, HttpStatus.OK);
     }
@@ -39,12 +39,7 @@ public class AssignmentController {
         AssignmentDTO createdAssignment = assignmentService.createAssignment(assignmentDTO);
         return new ResponseEntity<>(createdAssignment, HttpStatus.CREATED);
     }
-    //added delete all assignments
-    @DeleteMapping ("/deleteAll")
-    public ResponseEntity<Void> deleteAllAssignments() {
-        assignmentService.deleteAllAssignments();
-        return ResponseEntity.noContent().build();
-    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAssignmentById(@PathVariable Long id) {
@@ -59,6 +54,34 @@ public class AssignmentController {
     @GetMapping("/filter")
     public ResponseEntity<List<AssignmentDTO>> findAssignmentNotByNumberOfHours( @RequestParam ("numberOfHours") int numberOfHours) {
         List<AssignmentDTO> assignments = assignmentService.findAssignmentByNumberOfHoursNot(numberOfHours);
+        return new ResponseEntity<>(assignments, HttpStatus.OK);
+    }
+
+    //Custom API using all the new @Query methods in AssignmentRepository and in AssignmentService
+    //This API will return all assignments that have more than 10 hours
+    //Example: http://localhost:8080/assignments/filter2
+    @GetMapping("/filter2")
+    public ResponseEntity<List<AssignmentDTO>> findAssignmentByNumberOfHoursGreaterThan10() {
+        List<AssignmentDTO> assignments = assignmentService.findAssignmentByNumberOfHoursGreaterThan10();
         return new ResponseEntity(assignments, HttpStatus.OK);
     }
+
+    //Custom API using all the new @Query methods in AssignmentRepository and in AssignmentService
+    //This API will return an assignment using the employee id
+    //Example: http://localhost:8080/assignments/filter3?employeeId=1
+    @GetMapping("/filter3")
+    public ResponseEntity<List<AssignmentDTO>> findAssignmentByEmployeeId(@RequestParam ("employeeId") Long employeeId) {
+        List<AssignmentDTO> assignment = assignmentService.findAssignmentByEmployeeId(employeeId);
+        return new ResponseEntity(assignment, HttpStatus.OK);
+    }
+
+    //Custom API using all the new @Query methods in AssignmentRepository and in AssignmentService
+    //This API will return an assignment using the project id and the employee id
+    //Example: http://localhost:8080/assignments/filter4?employeeId=1&projectId=1
+    @GetMapping("/filter4")
+    public ResponseEntity<List<AssignmentDTO>> findAssignmentByEmployeeIdAndProjectId(@RequestParam ("employeeId") Long employeeId, @RequestParam ("projectId") Long projectId) {
+        List<AssignmentDTO> assignment = assignmentService.findAssignmentByEmployeeIdAndProjectId(employeeId, projectId);
+        return new ResponseEntity(assignment, HttpStatus.OK);
+    }
+
 }

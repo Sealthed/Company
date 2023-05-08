@@ -49,24 +49,33 @@ public class DepartmentController {
         return new ResponseEntity<>(updatedDepartment, HttpStatus.OK);
     }
 
-    //Add delete all departments
-    @DeleteMapping ("/deleteAll")
-    public ResponseEntity<Void> deleteAllDepartments() {
-        departmentService.deleteAllDepartments();
-        return ResponseEntity.noContent().build();
-    }
-
-    //Custom APIs that find departments by start date between two dates
-    //Test case: http://localhost:8080/departments/from?startDate=2020-01-01&endDate=2020-12-31
+    //Custom APIs that find departments by start date
+    //Test case: http://localhost:8080/departments/from?startDate=2020-01-01
     @GetMapping("/from")
-    public ResponseEntity<List<DepartmentDTO>> findDepartmentsByStartDateBetween(
-            @RequestParam("startDate")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDateStr,
-            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDateStr)
+    public ResponseEntity<List<DepartmentDTO>> findDepartmentsByStartDate(
+            @RequestParam("startDate")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDateStr)
     {
-        List<DepartmentDTO> departments = departmentService.getDepartmentByStartDateBetween(startDateStr, endDateStr);
+        List<DepartmentDTO> departments = departmentService.findByStartDate(startDateStr);
         return new ResponseEntity<>(departments, HttpStatus.OK);
     }
 
+    //Custom APIs that find departments by location
+    //Test case: http://localhost:8080/departments/location?location=London
+    @GetMapping("/location")
+    public ResponseEntity<List<DepartmentDTO>> findDepartmentsByLocation(
+            @RequestParam("location") String location)
+    {
+        List<DepartmentDTO> departments = departmentService.findByLocation(location);
+        return new ResponseEntity<>(departments, HttpStatus.OK);
+    }
+
+    //Custom APIs that count departments by location
+    @GetMapping("/countByLocation") //Test case: http://localhost:8080/departments/countByLocation
+    public ResponseEntity<Long> countDepartmentsByLocation(@RequestParam("location") String location)
+    {
+        Long departments = departmentService.countByLocation(location);
+        return new ResponseEntity<>(departments, HttpStatus.OK);
+    }
 
 }
 

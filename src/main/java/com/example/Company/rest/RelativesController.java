@@ -40,13 +40,6 @@ public class RelativesController {
         return new ResponseEntity<>(updatedRelatives, HttpStatus.OK);
     }
 
-    //add delete method that deletes all relatives
-    //Test Case: http://localhost:8080/relatives/deleteAll
-    @DeleteMapping ("/deleteAll")
-    public ResponseEntity<Void> deleteAllRelatives() {
-        relativesService.deleteAllRelatives();
-        return ResponseEntity.noContent().build();
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRelativesById(@PathVariable Long id) {

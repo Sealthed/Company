@@ -54,11 +54,6 @@ public class EmployeeService {
         employeeRepository.deleteById(id);
     }
 
-    //add delete method that deletes all employees
-    public void deleteAllEmployees() {
-        employeeRepository.deleteAll();
-    }
-
 
     public EmployeeDTO updateEmployee(Long id, EmployeeDTO employeeDTO) {
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
@@ -70,7 +65,7 @@ public class EmployeeService {
     }
     //Add method to find employee first name like "John" using the repository
     public List<EmployeeDTO> getEmployeeByFirstName(String firstName) {
-        List<Employee> employees = employeeRepository.findByFirstNameLike("%John%");
+        List<Employee> employees = employeeRepository.findByFirstNameLike(firstName);
         return employees.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());

@@ -37,10 +37,6 @@ public class DepartmentLocationService {
         return convertToDTO(savedDepartmentLocation);
     }
 
-    //Add method that delete all department locations
-    public void deleteAllDepartmentLocations() {
-        departmentLocationRepository.deleteAll();
-    }
 
     public void deleteDepartmentLocationById(Long id) {
         departmentLocationRepository.deleteById(id);
