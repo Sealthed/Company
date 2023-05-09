@@ -1,5 +1,6 @@
 package com.example.Company.service;
 
+import com.example.Company.Mapper.AssignmentMapper;
 import com.example.Company.entity.Assignment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,25 +17,25 @@ public class AssignmentService {
     @Autowired
     private AssignmentRepository assignmentRepository;
 
+    private final AssignmentMapper assignmentMapper = AssignmentMapper.INSTANCE;
+
     public List<AssignmentDTO> getAllAssignments() {
         List<Assignment> assignments = assignmentRepository.findAll();
         return assignments.stream()
-                .map(this::convertToDTO)
+                .map(assignmentMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     public AssignmentDTO getAssignmentById(Long id) {
         Assignment assignment = assignmentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Assignment not found"));
-        return convertToDTO(assignment);
+        return assignmentMapper.toDTO(assignment);
     }
 
     public AssignmentDTO createAssignment(AssignmentDTO assignmentDTO) {
-        Assignment assignment = new Assignment();
-        assignment.setId(assignmentDTO.getId());
-        assignment.setNumberOfHours(assignmentDTO.getNumberOfHours());
+        Assignment assignment = assignmentMapper.convertToEntity(assignmentDTO);
         Assignment savedAssignment = assignmentRepository.save(assignment);
-        return convertToDTO(savedAssignment);
+        return assignmentMapper.toDTO(savedAssignment);
     }
 
     public void deleteAssignmentById(Long id) {
@@ -45,13 +46,13 @@ public class AssignmentService {
         Assignment assignment = assignmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Assignment not found with id: " + id));
         assignment.setNumberOfHours(assignmentDTO.getNumberOfHours());
         Assignment updatedAssignment = assignmentRepository.save(assignment);
-        return convertToDTO(updatedAssignment);
+        return assignmentMapper.toDTO(updatedAssignment);
     }
 
     public List<AssignmentDTO> findAssignmentByNumberOfHoursNot(Integer numberOfHours) {
         List<Assignment> assignments = assignmentRepository.findByNumberOfHoursNot(numberOfHours);
         return assignments.stream()
-                .map(this::convertToDTO)
+                .map(assignmentMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -59,29 +60,21 @@ public class AssignmentService {
     public List<AssignmentDTO> findAssignmentByNumberOfHoursGreaterThan10() {
         List<Assignment> assignments = assignmentRepository.findAssignmentByNumberOfHoursGreaterThan10();
         return assignments.stream()
-                .map(this::convertToDTO)
+                .map(assignmentMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     public List<AssignmentDTO> findAssignmentByEmployeeId(Long employeeId) {
         List<Assignment> assignments = assignmentRepository.findAssignmentByEmployeeId(employeeId);
         return assignments.stream()
-                .map(this::convertToDTO)
+                .map(assignmentMapper::toDTO)
                 .collect(Collectors.toList());
     }
-
 
     public List<AssignmentDTO>findAssignmentByEmployeeIdAndProjectId(Long employeeId, Long projectId) {
         List<Assignment> assignments = assignmentRepository.findAssignmentByEmployeeIdAndProjectId(employeeId, projectId);
-        return assignments.stream()
-                .map(this::convertToDTO)
+        return assignments.stream().map(assignmentMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
-    private AssignmentDTO convertToDTO(Assignment assignment) {
-        AssignmentDTO dto = new AssignmentDTO();
-        dto.setId(assignment.getId());
-        dto.setNumberOfHours(assignment.getNumberOfHours());
-        return dto;
-    }
 }

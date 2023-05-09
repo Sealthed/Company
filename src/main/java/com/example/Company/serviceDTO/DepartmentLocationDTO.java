@@ -8,4 +8,5 @@ import lombok.NoArgsConstructor;
 public class DepartmentLocationDTO {
     private Long id;
     private String location;
+    private Long departmentId;
 }

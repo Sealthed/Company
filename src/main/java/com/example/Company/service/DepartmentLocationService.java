@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Sort;
+import com.example.Company.Mapper.DepartmentLocationMapper;
 
 import java.util.List;
 
@@ -15,18 +16,20 @@ import java.util.List;
 public class DepartmentLocationService {
     @Autowired
     private DepartmentLocationRepository departmentLocationRepository;
+    @Autowired
+    private final DepartmentLocationMapper departmentLocationMapper;
 
     public List<DepartmentLocationDTO> getAllDepartmentLocations() {
         List<DepartmentLocation> departmentLocations = departmentLocationRepository.findAll();
         return departmentLocations.stream()
-                .map(this::convertToDTO)
+                .map(departmentLocationMapper::toDTO)
                 .collect(java.util.stream.Collectors.toList());
     }
 
     public DepartmentLocationDTO getDepartmentLocationById(Long id) {
         DepartmentLocation departmentLocation = departmentLocationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("DepartmentLocation not found"));
-        return convertToDTO(departmentLocation);
+        return departmentLocationMapper.toDTO(departmentLocation);
     }
 
     public DepartmentLocationDTO createDepartmentLocation(DepartmentLocationDTO departmentLocationDTO) {
@@ -34,7 +37,7 @@ public class DepartmentLocationService {
         departmentLocation.setId(departmentLocationDTO.getId());
         departmentLocation.setLocation(departmentLocationDTO.getLocation());
         DepartmentLocation savedDepartmentLocation = departmentLocationRepository.save(departmentLocation);
-        return convertToDTO(savedDepartmentLocation);
+        return departmentLocationMapper.toDTO(savedDepartmentLocation);
     }
 
 
@@ -46,7 +49,7 @@ public class DepartmentLocationService {
         DepartmentLocation departmentLocation = departmentLocationRepository.findById(id).orElseThrow(() -> new RuntimeException("DepartmentLocation not found with id: " + id));
         departmentLocation.setLocation(departmentLocationDTO.getLocation());
         DepartmentLocation updatedDepartmentLocation = departmentLocationRepository.save(departmentLocation);
-        return convertToDTO(updatedDepartmentLocation);
+        return departmentLocationMapper.toDTO(updatedDepartmentLocation);
     }
 
     //find department location by location id using Sort
@@ -54,17 +57,21 @@ public class DepartmentLocationService {
         Sort sort = Sort.by(Sort.Direction.ASC, "id");
         List <DepartmentLocation> departmentLocations = departmentLocationRepository.findByLocationOrderByIdAsc(location, sort);
         return departmentLocations.stream()
-                .map(this::convertToDTO)
+                .map(departmentLocationMapper::toDTO)
                 .collect(java.util.stream.Collectors.toList());
     }
 
-
-    private DepartmentLocationDTO convertToDTO(DepartmentLocation departmentLocation) {
-        DepartmentLocationDTO dto = new DepartmentLocationDTO();
-        dto.setId(departmentLocation.getId());
-        dto.setLocation(departmentLocation.getLocation());
-        return dto;
+    public List<DepartmentLocationDTO> findByLocationOrderByIdAscNative(String location) {
+        List <DepartmentLocation> departmentLocations = departmentLocationRepository.findByLocationOrderByIdAscNative(location);
+        return departmentLocations.stream()
+                .map(departmentLocationMapper::toDTO)
+                .collect(java.util.stream.Collectors.toList());
     }
 
+    public List<DepartmentLocationDTO> findLocationsWithEmployeeCountGreaterThanThreshold(){
+        List<DepartmentLocation> departmentLocations = departmentLocationRepository.findLocationsWithEmployeeCountGreaterThanThreshold();
+        return departmentLocations.stream().map(departmentLocationMapper::toDTO)
+                .collect(java.util.stream.Collectors.toList());
+    }
 
 }

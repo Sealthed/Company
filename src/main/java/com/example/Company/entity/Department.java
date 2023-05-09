@@ -12,7 +12,6 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table (name = "Department")
 //Add some @NamedQueries
 @NamedQueries(
     {

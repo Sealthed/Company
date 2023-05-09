@@ -1,5 +1,4 @@
 package com.example.Company.rest;
-import com.example.Company.entity.DepartmentLocation;
 import com.example.Company.service.DepartmentLocationService;
 import com.example.Company.serviceDTO.DepartmentLocationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ public class DepartmentLocationController {
     }
 
     @GetMapping ("/{id}")
-    public ResponseEntity<DepartmentLocationDTO> getDepartmentLocationById(Long id) {
+    public ResponseEntity<DepartmentLocationDTO> getDepartmentLocationById(@PathVariable Long id) {
         DepartmentLocationDTO departmentLocation = departmentLocationService.getDepartmentLocationById(id);
         return new ResponseEntity<>(departmentLocation, HttpStatus.OK);
     }
@@ -49,8 +48,10 @@ public class DepartmentLocationController {
     //Custom APIs that find Department Location Sort by Id
     //http://localhost:8080/departmentLocations/sort
     @GetMapping("/sort")
-    public ResponseEntity<DepartmentLocationDTO> findDepartmentLocationName( @RequestParam ("Location") String location) {
+    public ResponseEntity<List<DepartmentLocationDTO>> findDepartmentLocationName(@RequestParam ("Location") String location) {
         List<DepartmentLocationDTO> departmentLocations = departmentLocationService.getDepartmentLocationByLocationId(location);
-        return new ResponseEntity(departmentLocations, HttpStatus.OK);
+        return new ResponseEntity<>(departmentLocations, HttpStatus.OK);
     }
+
+
 }
