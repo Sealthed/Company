@@ -23,7 +23,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDTO> getEmployeeById(Long id) {
+    public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable Long id) {
         EmployeeDTO employee = employeeService.getEmployeeById(id);
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
@@ -49,7 +49,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<EmployeeDTO> getEmployeeByFirstNameAndLastName(String firstName, String lastName) {
+    public ResponseEntity<EmployeeDTO> getEmployeeByFirstNameAndLastName(@RequestParam String firstName,@RequestParam String lastName) {
         EmployeeDTO employee = employeeService.getEmployeeByFirstNameAndLastName(firstName, lastName);
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }

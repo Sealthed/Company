@@ -1,5 +1,6 @@
 package com.example.Company.service;
 
+import com.example.Company.Mapper.DepartmentMapper;
 import com.example.Company.repository.DepartmentRepository;
 import com.example.Company.serviceDTO.DepartmentDTO;
 import com.example.Company.entity.Department;
@@ -18,17 +19,17 @@ public class DepartmentService {
     @Autowired
     private DepartmentRepository departmentRepository;
 
+    private final DepartmentMapper departmentMapper = DepartmentMapper.INSTANCE;
+
     public List<DepartmentDTO> getAllDepartments() {
         List<Department> departments = departmentRepository.findAll();
-        return departments.stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+        return departments.stream().map(departmentMapper::toDTO).collect(Collectors.toList());
     }
 
     public DepartmentDTO getDepartmentById(Long id) {
         Department department = departmentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Department not found"));
-        return convertToDTO(department);
+        return departmentMapper.toDTO(department);
     }
 
 
@@ -37,7 +38,7 @@ public class DepartmentService {
         department.setStartDate(departmentDTO.getStartDate());
         department.setName(departmentDTO.getName());
         Department savedDepartment = departmentRepository.save(department);
-        return convertToDTO(savedDepartment);
+        return departmentMapper.toDTO(savedDepartment);
     }
 
     public void deleteDepartmentById(Long id) {
@@ -47,31 +48,26 @@ public class DepartmentService {
     //Update the service class to use named query from repository and department entity
     public List<DepartmentDTO> findDepartmentByStartDate(LocalDate date) {
         List<Department> departments = departmentRepository.findByStartDate(date);
-        return departments.stream()
-                .map(this::convertToDTO)
+        return departments.stream().map(departmentMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     //Update the service class to use named query from repository and department entity
     public List<DepartmentDTO> findByStartDate(LocalDate date){
         List<Department> departments = departmentRepository.findByStartDate(date);
-        return departments.stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+        return departments.stream().map(departmentMapper::toDTO).collect(Collectors.toList());
     }
 
     //Update the service class to use named query from repository and department entity
     public List<DepartmentDTO> findByLocation(String location){
         List<Department> departments = departmentRepository.findByLocation(location);
-        return departments.stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+        return departments.stream().map(departmentMapper::toDTO).collect(Collectors.toList());
     }
 
     //Use the countByLocation in the repository to count the number of departments in a location
     public Long countByLocation(String location){
-        List<Object[]> results = departmentRepository.countByLocation(location);
-        return results.stream().mapToLong(result -> (Long) result[0]).sum();
+        int result = departmentRepository.countByLocation(location);
+        return Long.valueOf(result);
     }
 
     public DepartmentDTO updateDepartment(Long id, DepartmentDTO departmentDTO) {
@@ -79,16 +75,8 @@ public class DepartmentService {
         department.setName(departmentDTO.getName());
         department.setStartDate(departmentDTO.getStartDate());
         Department updatedDepartment = departmentRepository.save(department);
-        return convertToDTO(updatedDepartment);
+        return departmentMapper.toDTO(updatedDepartment);
     }
 
-
-    private DepartmentDTO convertToDTO(Department department) {
-        DepartmentDTO dto = new DepartmentDTO();
-        dto.setDepartmentid(department.getDepartmentid());
-        dto.setStartDate(department.getStartDate());
-        dto.setName(department.getName());
-        return dto;
-    }
 }
 

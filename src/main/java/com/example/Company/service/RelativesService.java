@@ -3,30 +3,33 @@ package com.example.Company.service;
 import com.example.Company.repository.RelativesRepository;
 import com.example.Company.serviceDTO.RelativesDTO;
 import com.example.Company.entity.Relatives;
+import com.example.Company.Mapper.RelativesMapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class RelativesService {
     @Autowired
     private RelativesRepository relativesRepository;
+    private RelativesMapper relativesMapper;
 
     public List<RelativesDTO> getAllRelatives() {
         List<Relatives> relatives = relativesRepository.findAll();
         return relatives.stream()
-                .map(this::convertToDTO)
-                .collect(java.util.stream.Collectors.toList());
+                .map(relativesMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     public RelativesDTO getRelativesById(Long id) {
         Relatives relatives = relativesRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Relatives not found"));
-        return convertToDTO(relatives);
+        return relativesMapper.toDTO(relatives);
     }
 
     public RelativesDTO createRelatives(RelativesDTO relativesDTO) {
@@ -34,7 +37,7 @@ public class RelativesService {
         relatives.setId(relativesDTO.getId());
         relatives.setFullName(relativesDTO.getRelativename());
         Relatives savedRelatives = relativesRepository.save(relatives);
-        return convertToDTO(savedRelatives);
+        return relativesMapper.toDTO(savedRelatives);
     }
 
     public void deleteRelativesById(Long id) {
@@ -47,7 +50,7 @@ public class RelativesService {
     public List<RelativesDTO> findRelativesByNameNot(String name) {
         List<Relatives> relatives = relativesRepository.findByFullNameNot(name);
         return relatives.stream()
-                .map(this::convertToDTO)
+                .map(relativesMapper::toDTO)
                 .collect(java.util.stream.Collectors.toList());
     }
 
@@ -56,13 +59,7 @@ public class RelativesService {
         Relatives relatives = relativesRepository.findById(id).orElseThrow(() -> new RuntimeException("Relatives not found with id: " + id));
         relatives.setFullName(relativesDTO.getRelativename());
         Relatives updatedRelatives = relativesRepository.save(relatives);
-        return convertToDTO(updatedRelatives);
+        return relativesMapper.toDTO(updatedRelatives);
     }
 
-    private RelativesDTO convertToDTO(Relatives relatives) {
-        RelativesDTO dto = new RelativesDTO();
-        dto.setId(relatives.getId());
-        dto.setRelativename(relatives.getFullName());
-        return dto;
-    }
 }

@@ -14,6 +14,32 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table (name = "Employee")
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name = "Employee.findByMaleGender",
+                query = "SELECT * FROM Employee e WHERE e.gender = 'Male'",
+                resultClass = Employee.class
+        ),
+        @NamedNativeQuery(
+            name = "Employee.findByFemaleGender",
+            query = "SELECT * FROM Employee e WHERE e.gender = 'Female'",
+            resultClass = Employee.class
+        ),
+        @NamedNativeQuery(
+                name = "Employee.findMaxSalary",
+                query = "SELECT MAX(e.salary) FROM Employee e",
+                resultSetMapping = "salaryMapping"
+        ),
+        @NamedNativeQuery(
+                name = "Employee.findEmployeeWithMaxSalary",
+                query = "SELECT * FROM Employee e WHERE e.salary = (SELECT MAX(salary) FROM Employee)",
+                resultClass = Employee.class
+        ),
+})
+@SqlResultSetMapping(
+        name = "salaryMapping",
+        columns = {@ColumnResult(name = "max_salary", type = Integer.class)}
+)
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,6 +71,6 @@ public class Employee {
 
     //create deptid columndate
     @ManyToOne
-    @JoinColumn(name = "deptid", referencedColumnName = "departmentid")
+    @JoinColumn(name = "deptid")
     private Department department;
 }

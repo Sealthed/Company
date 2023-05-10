@@ -70,7 +70,7 @@ public class DepartmentController {
     }
 
     //Custom APIs that count departments by location
-    @GetMapping("/countByLocation") //Test case: http://localhost:8080/departments/countByLocation
+    @GetMapping("/countByLocation") //Test case: http://localhost:8080/departments/countByLocation?location=Indonesia
     public ResponseEntity<Long> countDepartmentsByLocation(@RequestParam("location") String location)
     {
         Long departments = departmentService.countByLocation(location);
