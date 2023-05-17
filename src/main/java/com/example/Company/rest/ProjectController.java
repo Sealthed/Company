@@ -2,6 +2,8 @@ package com.example.Company.rest;
 
 import com.example.Company.service.ProjectService;
 import com.example.Company.serviceDTO.ProjectDTO;
+import com.example.Company.serviceDTO.ProjectDetailDTO;
+import com.example.Company.serviceDTO.ProjectSalaryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,4 +55,22 @@ public class ProjectController {
         List<ProjectDTO> projects = projectService.findProjectByNameIgnoreCase(name);
         return new ResponseEntity(projects, HttpStatus.OK);
     }
+    @GetMapping("/projectswithdepartmentname") //http://localhost:8080/projects/projectswithdepartmentname
+    public List<ProjectDTO> getAllProjectsWithDepartmentName() {
+        return projectService.getAllProjectsWithDepartmentName();
+    }
+
+    //10. List all projects with the number of employees and number of hours in a specific area
+    @GetMapping("/projectswithemployeesandhours") //http://localhost:8080/projects/projectswithemployeesandhours
+    public List<ProjectDetailDTO> getProjectDetailsByArea(@RequestParam ("area") String area) {
+        return projectService.getProjectDetailsByArea(area);
+    }
+
+    //11. List all projects with total cost (salary) and hours in a specific area
+    @GetMapping("/projects/salary") //http://localhost:8080/projects/projects/salary?area=Hanoi
+    public List<ProjectSalaryDTO> getProjectSalaryDetailsByArea(@RequestParam ("area") String area) {
+        return projectService.getProjectSalaryDetailsByArea(area);
+    }
+
+
 }

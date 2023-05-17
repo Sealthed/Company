@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Data
 @Entity
@@ -28,4 +29,8 @@ public class Project {
     @ManyToOne
     @JoinColumn (name = "mangaed_department", referencedColumnName = "departmentid")
     private Department department;
+
+    @OneToMany (mappedBy = "project")
+    private Collection<Assignment> assignment;
+
 }

@@ -9,5 +9,7 @@ import org.mapstruct.Mapping;
 public interface RelativesMapper {
     @Mapping(source = "id", target = "id")
     @Mapping(source = "fullName", target = "relativename")
+    @Mapping(source = "relationship", target = "relationship")
     RelativesDTO toDTO (Relatives relatives);
+
 }

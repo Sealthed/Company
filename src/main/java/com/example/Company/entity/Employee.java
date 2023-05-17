@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 
 //This Employee class uses @entity, @data, @noargsconstructor, @id, @generatedvalue, @column,@table
 @Entity
@@ -34,7 +36,7 @@ import java.time.LocalDate;
                 name = "Employee.findEmployeeWithMaxSalary",
                 query = "SELECT * FROM Employee e WHERE e.salary = (SELECT MAX(salary) FROM Employee)",
                 resultClass = Employee.class
-        ),
+        )
 })
 @SqlResultSetMapping(
         name = "salaryMapping",
@@ -73,4 +75,12 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "deptid")
     private Department department;
+
+    @OneToMany(mappedBy = "employee")
+    private List<Relatives> relatives;
+
+    //@One to many with assignment
+    @OneToMany(mappedBy = "employee")
+    private Collection<Assignment> assignment;
+
 }

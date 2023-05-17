@@ -2,6 +2,7 @@ package com.example.Company.Mapper;
 
 import com.example.Company.entity.Department;
 import com.example.Company.serviceDTO.DepartmentDTO;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -15,5 +16,6 @@ public interface DepartmentMapper {
     @Mapping(source = "name", target = "name")
     @Mapping(source = "startDate", target = "startDate")
     DepartmentDTO toDTO(Department department);
+
 
 }

@@ -1,14 +1,15 @@
-package com.example.Company.serviceDTO;
+package com.example.Company.CustomDTO;
 
 import com.example.Company.entity.Gender;
+import com.example.Company.serviceDTO.RelativesDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class EmployeeDTO {
+public class EmployeeRelativesDTO {
     private Long employeeId;
     private LocalDate dateOfBirth;
     private String firstName;
@@ -17,6 +18,5 @@ public class EmployeeDTO {
     private String middleName;
     private Integer salary;
     private Long departmentId;
-    private List<RelativesDTO> relatives;
-    private RelativesDTO EmerencyContact;
+    private RelativesDTO relative;
 }
