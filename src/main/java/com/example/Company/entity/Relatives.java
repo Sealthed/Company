@@ -1,5 +1,6 @@
 package com.example.Company.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,4 +34,5 @@ public class Relatives {
     @ManyToOne
     @JoinColumn (name = "Employeeid", referencedColumnName = "employeeid")
     private Employee employee;
+
 }

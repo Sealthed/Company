@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
+import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -55,4 +57,9 @@ public class Department {
     @OneToMany (mappedBy = "department")
     private List<Employee> employee;
 
+    public List<Project> getProject() {
+        return project;
+    }
 }
+
+

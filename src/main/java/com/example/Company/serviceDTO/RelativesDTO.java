@@ -8,4 +8,5 @@ import lombok.RequiredArgsConstructor;
 public class RelativesDTO {
     private Long id;
     private String relativename;
+    private String Relationship;
 }
